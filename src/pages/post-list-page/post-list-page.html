@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'POSTS' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="loadData($event)">
+    <ion-refresher-content pullingText="{{ 'PULL_TO_REFRESH' | translate }}" refreshingText="{{ 'REFRESHING' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <empty-view *ngIf="isErrorViewVisible" icon="alert" [text]="'ERROR_NETWORK' | translate">
+  </empty-view>
+
+  <empty-view *ngIf="isEmptyViewVisible" icon="list-box" [text]="'EMPTY_DATA' | translate">
+  </empty-view>
+
+  <section *ngIf="posts.length">
+    <ion-card class="shadow" *ngFor="let post of posts" color="light">
+
+      <div class="card-image">
+        <img-loader (load)="onImageLoad($event)" [src]="post.image?.url()">
+        </img-loader>
+      </div>
+
+      <ion-card-content>
+        <h2 class="bold">{{ post.title }}</h2>
+        <p>{{ post.body }}</p>
+      </ion-card-content>
+
+      <ion-row>
+        <ion-col>
+          <button ion-button *ngIf="post.place" small color="primary" (click)="goToPlace(post.place)">
+            {{ 'VIEW_PLACE' | translate }}
+          </button>
+        </ion-col>
+        <ion-col>
+        </ion-col>
+        <ion-col align-self-end text-center>
+          <ion-note>
+            {{ post.createdAt | date:'dd/MM/yyyy H:mm' }}
+          </ion-note>
+        </ion-col>
+      </ion-row>
+
+    </ion-card>
+  </section>
+
+  <ion-infinite-scroll (ionInfinite)="onLoadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

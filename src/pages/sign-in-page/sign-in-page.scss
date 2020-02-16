@@ -1,0 +1,12 @@
+page-sign-in-page {
+  .toolbar.transparent .toolbar-background {
+    background: transparent !important;
+  }
+  ion-content {
+    padding-top: 60px;
+    background: $gradient-bg;
+  }
+  .text-input {
+    color: color($colors, light);
+  }
+}

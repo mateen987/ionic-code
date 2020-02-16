@@ -1,0 +1,119 @@
+$primary-color1: rgb(233, 230, 230);
+$secondary-color1: rgb(105, 173, 236);
+
+$primary-color2: #6E8EFB;
+$secondary-color2: #A777E3;
+
+$primary-color3: #0470DC;
+$secondary-color3: #13F1FC;
+
+$primary-color4: #459522;
+$secondary-color4: #B1EA4D;
+
+$primary-color5: #F38381;
+$secondary-color5: #FCDF8A;
+
+$primary-color6: #3BB2B8;
+$secondary-color6: #42E695;
+
+// The app direction is used to include
+// rtl styles in your app. For more info, please see:
+// http://ionicframework.com/docs/theming/rtl-support/
+$app-direction: multi;
+
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/v2/theming/
+@import "ionic.globals";
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+$text-color:              #7d7d7d;
+$background-color:        #e8e9ec;
+$text-input-md-show-focus-highlight: false !default;
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:    $primary-color3,
+  secondary:  $secondary-color1,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  accent:     #bfbfbf,
+  dark:       #7e7e7e,
+  darker:       #444,
+  fb:         #3b5998,
+);
+
+$refresher-icon-color:   color($colors, primary, base);
+$refresher-text-color:   color($colors, primary, base);
+$refresher-border-color: color($colors, dark, base);
+$text-input-placeholder-color: color($colors, light, base);
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+$toast-ios-title-color: color($colors, light, base);
+$list-ios-border-color: #d8d8d8;
+$loading-ios-spinner-color: color($colors, primary, base);
+$searchbar-ios-input-placeholder-color: color($colors, light, base);
+$searchbar-ios-input-search-icon-color: color($colors, light, base);
+$searchbar-ios-input-text-color: color($colors, light, base);
+$label-ios-text-color-focused: color($colors, light, base);
+$toolbar-ios-border-color: transparent;
+$loading-ios-background: color($colors, primary, base);
+$loading-ios-border-radius: 16px;
+$loading-ios-text-color: color($colors, light, base);
+$loading-ios-spinner-color: color($colors, light, base);
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+$toast-md-title-color:     color($colors, light, base);
+$list-md-border-color:     #d8d8d8;
+$loading-md-spinner-color: color($colors, primary, base);
+$searchbar-md-input-placeholder-color: color($colors, light, base);
+$searchbar-md-input-search-icon-color: color($colors, light, base);
+$searchbar-md-input-text-color: color($colors, light, base);
+$label-md-text-color-focused: color($colors, light, base);
+$loading-md-background: color($colors, primary, base);
+$loading-md-border-radius: 16px;
+$loading-md-text-color: color($colors, light, base);
+$loading-md-spinner-color: color($colors, light, base);
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/v2/ionicons/
+
+$ionicons-font-path: "../assets/fonts";
+@import "ionic.ionicons";

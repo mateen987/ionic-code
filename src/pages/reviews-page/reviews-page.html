@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "REVIEWS" | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content #container padding>
+
+  <ion-refresher (ionRefresh)="onReload($event)">
+    <ion-refresher-content pullingText="{{ 'PULL_TO_REFRESH' | translate }}" refreshingText="{{ 'REFRESHING' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <empty-view *ngIf="isErrorViewVisible" icon="alert" [text]="'ERROR_REVIEWS' | translate">
+  </empty-view>
+
+  <empty-view *ngIf="isEmptyViewVisible" icon="star" [text]="'EMPTY_REVIEWS' | translate">
+  </empty-view>
+
+  <ion-list no-lines>
+    <div margin-bottom padding class="radius light-bg border" *ngFor="let review of reviews">
+      <ion-item no-padding color="light">
+        <ion-avatar item-start>
+          <img defaultImage="./assets/img/avatar.png"
+            [lazyLoad]="review.user?.photo?.url()"
+            [scrollObservable]="container.ionScroll" />
+        </ion-avatar>
+        <h2 class="bold no-margin">{{ review.user?.name }}</h2>
+        <star-rating
+          [starType]="'svg'"
+          [size]="'medium'"
+          [readOnly]="true"
+          [showHalfStars]="false"
+          [rating]="review.rating">
+        </star-rating>
+        <p class="text-small no-margin" ion-text color="accent">
+          {{ review.createdAt | date:'mediumDate' }}
+        </p>
+      </ion-item>
+      <ion-row>
+        <ion-col no-padding col-12>
+          <p class="text-medium bold no-margin" ion-text color="dark">{{ review.comment }}</p>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="onLoadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

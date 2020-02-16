@@ -1,0 +1,88 @@
+<ion-header no-border>
+  <ion-navbar class="transparent" color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'PROFILE' | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button clear *ngIf="!user.isLoggedInViaFacebook()" (click)="onPresentEditModal()">
+        {{ 'EDIT' | translate }}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <section class="heading">
+    <ion-avatar>
+      <img-loader useImg (load)="onImageLoad($event)" fallback="assets/img/avatar.png" [src]="user.photo?.url()">
+      </img-loader>
+    </ion-avatar>
+    <h3 ion-text color="light">{{ user?.name }}</h3>
+    <button ion-button small round outline color="light" *ngIf="!user.isLoggedInViaFacebook()" (click)="navigateTo('ChangePasswordPage')">
+      {{ 'CHANGE_PASSWORD' | translate }}
+    </button>
+  </section>
+  <ion-segment mode="md" class="" [(ngModel)]="segment" color="light">
+    <ion-segment-button value="likes">
+      <span class="bold">{{ 'LIKES' | translate }}</span>
+    </ion-segment-button>
+    <ion-segment-button value="places">
+      <span class="bold">{{ 'MY_PLACES' | translate }}</span>
+    </ion-segment-button>
+    <ion-segment-button value="comments">
+      <span class="bold">{{ 'COMMENTS' | translate }}</span>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-row *ngIf="segment === 'likes' && likedPlaces.length">
+    <ion-col col-6 float-left *ngFor="let place of likedPlaces">
+      <ion-card class="shadow" no-margin margin-bottom color="light" (click)="goToPlace(place)">
+        <div class="card-img">
+          <img-loader [src]="place.image?.url()" (load)="onImageLoad($event)"></img-loader>
+        </div>
+        <ion-card-content no-padding padding text-nowrap>
+          <p class="text-medium ellipsis bold">{{ place.title }}</p>
+          <p class="text-medium ellipsis bold" ion-text color="accent">
+            {{ place.category.title }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-list no-lines padding *ngIf="segment === 'comments' && reviews.length">
+    <div margin-bottom padding class="radius light-bg border" *ngFor="let review of reviews">
+      <ion-item no-padding color="light" (click)="goToPlace(review.place)">
+        <ion-avatar item-start>
+          <img-loader [src]="review.place?.imageThumb?.url()" fallback="./assets/img/placeholder1.png" (load)="onImageLoad($event)"
+            useImg>
+          </img-loader>
+        </ion-avatar>
+        <h2 class="bold no-margin">{{ review.place.title }}</h2>
+        <star-rating [starType]="'svg'" [size]="'medium'" [readOnly]="true" [showHalfStars]="false" [rating]="review.rating">
+        </star-rating>
+        <p class="text-small no-margin" ion-text color="accent">
+          {{ review.createdAt | date:'mediumDate' }}
+        </p>
+      </ion-item>
+      <ion-row>
+        <ion-col no-padding col-12>
+          <p class="text-medium bold no-margin" ion-text color="dark">{{ review.comment }}</p>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-list>
+  <ion-list no-lines padding *ngIf="segment === 'places' && places.length">
+    <ion-item color="light" margin-bottom class="light-bg border" *ngFor="let place of places" (click)="goToPlace(place)">
+      <ion-thumbnail item-start>
+        <img-loader [src]="place.imageThumb?.url()" fallback="./assets/img/placeholder1.png" (load)="onImageLoad($event)" useImg>
+        </img-loader>
+      </ion-thumbnail>
+      <h2 class="bold no-margin">{{ place.title }}</h2>
+      <ion-note class="text-small" item-end>
+        <span *ngIf="place.status === 'Pending'">{{ 'PENDING' | translate }}</span>
+        <span *ngIf="place.status === 'Rejected'">{{ 'REJECTED' | translate }}</span>
+        <span *ngIf="place.status === 'Approved'">{{ 'APPROVED' | translate }}</span>
+      </ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>

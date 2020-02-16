@@ -1,0 +1,27 @@
+page-add-place-page {
+
+  $border-color: lighten(color($colors, primary), 30%);
+
+  .toolbar.transparent .toolbar-background {
+    background: transparent !important;
+  }
+  .content {
+    background: $gradient-bg;
+  }
+
+  .text-input, .select-text {
+    color: color($colors, light);
+  }
+
+  .item-inner {
+    border-bottom: 1px solid $border-color !important;
+  }
+
+  .map {
+    width: 100%;
+    height: 180px;
+  }
+  div#pwa {
+    visibility: hidden;
+  }
+}

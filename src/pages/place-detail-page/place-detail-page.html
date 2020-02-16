@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ place?.title }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onShare()">
+        <ion-icon name="share"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content #container>
+
+  <ion-slides pager>
+    <ion-slide *ngFor="let image of images">
+      <div class="img-container">
+        <img-loader [src]="image?.url()" (load)="onImageLoad($event)"></img-loader>
+      </div>
+    </ion-slide>
+  </ion-slides>
+
+  <div class="card-container">
+    <ion-fab right top>
+      <button ion-fab (click)="onLike()">
+        <ion-icon [name]="isLiked ? 'heart' : 'heart-outline'"></ion-icon>
+      </button>
+    </ion-fab>
+    <ion-card class="shadow radius-top card-top" color="light">
+      <ion-card-content>
+
+        <p [class.hidden]="!location" margin-top float-end>
+          <ion-icon color="dark" name="pin"></ion-icon>
+          <span class="text-small bold" ion-text color="dark">
+            {{ place?.distance(location, unit) }}
+          </span>
+        </p>
+        <h2 class="bold" ion-text color="primary">{{ place?.title }}</h2>
+        <star-rating *ngIf="place.rating" [starType]="'svg'" [size]="'medium'" [readOnly]="true" [showHalfStars]="false" [rating]="place.rating">
+        </star-rating>
+        <p class="bold" margin-top ion-text color="dark">{{ place?.description }}</p>
+
+        <ion-row>
+          <ion-col col-4 text-center tapabble [class.disabled]="!place?.phone" (click)="onCall()">
+            <div>
+              <ion-icon name="call" color="primary"></ion-icon>
+            </div>
+            <p class="bold" ion-text color="primary">{{ 'CALL' | translate }}</p>
+          </ion-col>
+          <ion-col col-4 text-center tapabble (click)="goToMap()">
+            <div>
+              <ion-icon name="map" color="primary"></ion-icon>
+            </div>
+            <p class="bold" ion-text color="primary">{{ 'DIRECTIONS' | translate }}</p>
+          </ion-col>
+          <ion-col col-4 text-center tapabble [class.disabled]="!place?.website" (click)="openUrl()">
+            <div>
+              <ion-icon name="globe" color="primary"></ion-icon>
+            </div>
+            <p class="bold" ion-text color="primary">{{ 'WEBSITE' | translate }}</p>
+          </ion-col>
+        </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <section padding margin-top>
+
+    <ion-row align-items-center>
+      <ion-col col-8>
+        <h5 no-margin>
+          <ion-icon class="text-medium" name="chatbubbles" color="accent"></ion-icon>
+          {{ 'COMMENTS_AND_REACTIONS' | translate }}
+        </h5>
+      </ion-col>
+      <ion-col col-4 text-end>
+        <button class="bold" ion-button small block round color="primary" (click)="onRate()">
+          {{ 'POST_REVIEW' | translate }}
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <div *ngIf="!reviews.length" text-center>
+      <p class="text-medium" color="accent">
+        {{ 'EMPTY_REVIEWS' | translate }}
+      </p>
+    </div>
+
+    <ion-list no-lines>
+      <div margin-bottom padding class="radius light-bg border" *ngFor="let review of reviews">
+        <ion-item no-padding color="light">
+          <ion-avatar item-start>
+            <img defaultImage="./assets/img/avatar.png"
+              [lazyLoad]="review.user?.photo?.url()"
+              [scrollObservable]="container.ionScroll" />
+          </ion-avatar>
+          <h2 class="bold no-margin">{{ review.user?.name }}</h2>
+          <p class="text-small no-margin" ion-text color="accent">
+            {{ review.createdAt | date:'mediumDate' }}
+          </p>
+          <star-rating
+            [starType]="'svg'"
+            [size]="'small'"
+            [readOnly]="true"
+            [showHalfStars]="false"
+            [rating]="review.rating">
+          </star-rating>
+        </ion-item>
+        <ion-row>
+          <ion-col no-padding col-12>
+            <p class="text-medium bold no-margin" ion-text color="dark">{{ review.comment }}</p>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-list>
+    <div text-center *ngIf="reviews.length">
+      <button class="bold" ion-button icon-right clear color="dark" (click)="goToReviews()">
+        {{ 'VIEW_ALL_REVIEWS' | translate }}
+        <ion-icon name="arrow-round-forward"></ion-icon>
+      </button>
+    </div>
+
+  </section>
+
+</ion-content>

@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ 'SEARCH' | translate }}</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar mode="ios"
+      (keyup.enter)="onSearch($event)"
+      [placeholder]="'SEARCH' | translate">
+    </ion-searchbar>
+    <!--<ion-item>
+      <ion-label>By Rating</ion-label>
+      <ion-checkbox color="secondary" (ionChange)="onChangeRating()" [checked]='rating'></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>By Restaurant</ion-label>
+      <ion-checkbox color="danger" (ionChange)="onChangeRestaurant()" [checked]='restaurant' ></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>By Grocery store</ion-label>
+      <ion-checkbox color="dark" (ionChange)="onChangeGrocery()" [checked]='grocery' ></ion-checkbox>
+    </ion-item>-->
+    <ion-list radio-group [(ngModel)]="searchoption">
+      <ion-list-header>
+        Search Options
+      </ion-list-header>
+      <ion-item>
+        <ion-label>By Rating</ion-label>
+        <ion-radio value="rating"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>By Restaurant</ion-label>
+        <ion-radio value="restaurant"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>By Grocery Store</ion-label>
+        <ion-radio value="grocery"></ion-radio>
+      </ion-item>
+    </ion-list>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="loadData($event)">
+    <ion-refresher-content pullingText="{{ 'PULL_TO_REFRESH' | translate }}" refreshingText="{{ 'REFRESHING' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <empty-view *ngIf="isErrorViewVisible" icon="alert" [text]="'ERROR_NETWORK' | translate">
+  </empty-view>
+
+  <empty-view *ngIf="isEmptyViewVisible" icon="alert" [text]="'EMPTY_DATA' | translate">
+  </empty-view>
+
+  <ion-row>
+    <ion-col col-6 float-left *ngFor="let place of places"
+      (click)="navigateTo('PlaceDetailPage', { place: place })">
+      <ion-card class="shadow" color="light">
+
+        <div class="image-container">
+          <img-loader useImg (load)="onImageLoad($event)" [src]="place.imageThumb?.url()">
+          </img-loader>
+        </div>
+
+        <ion-card-content no-padding padding text-nowrap>
+          <p class="text-medium ellipsis bold">{{ place.title }}</p>
+          <p class="text-medium ellipsis bold" ion-text color="accent">
+            {{ place.category.title }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

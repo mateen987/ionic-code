@@ -1,0 +1,49 @@
+<ion-header no-border>
+  <ion-navbar class="transparent" color="primary">
+    <ion-title>{{ 'LOGIN' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding text-center>
+  
+  <img margin class="logo" src="./assets/img/logo.png" width="220">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+ 
+    <ion-item class="transparent">
+      <ion-label stacked color="light">{{ "EMAIL" | translate }}</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+      <ion-label stacked color="light">{{ "PASSWORD" | translate }}</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <div padding>
+      <button type="submit" color="light" ion-button block outline round>
+        {{ "LOGIN" | translate }}
+      </button>
+    </div>
+
+    <!--<div padding>
+      <button type="button" color="light" ion-button icon-start block round
+        (click)="onFacebookButtonTouched()">
+        <ion-icon name="logo-facebook" color="fb"></ion-icon>
+        {{ "FACEBOOK" | translate }}
+      </button>
+    </div>-->
+
+    <div padding>
+      <button type="button" class="bold" ion-button block clear color="light" (click)="goToSignUp()">
+        {{ "NO_ACCOUNT_YET_CREATE_ONE" | translate }}
+      </button>
+
+      <button type="button" class="bold" ion-button block clear color="light"
+        (click)="navigateTo('ForgotPasswordPage')">
+        {{ "FORGOT_PASSWORD" | translate }}
+      </button>
+    </div>
+
+  </form>
+</ion-content>

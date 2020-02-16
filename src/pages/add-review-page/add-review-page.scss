@@ -1,0 +1,60 @@
+page-add-review-page {
+  .toolbar.transparent .toolbar-background {
+    background: transparent !important;
+  }
+  .content {
+    background: $gradient-bg;
+  }
+  .rating {
+    align-items: center;
+    justify-content: center;
+
+    &.color-ok .star-container {
+      .star {
+        svg {
+          fill: #ff0 !important;
+        }
+        i {
+          color: #ff0 !important;
+        }
+      }
+    }
+
+    &.color-positive .star-container {
+      .star {
+        svg {
+          fill: #ff0 !important;
+        }
+        i {
+          color: #ff0 !important;
+        }
+      }
+    }
+
+    &.color-default .star-container {
+      .star {
+        svg {
+          fill: #ff0 !important;
+        }
+        i {
+          color: #ff0 !important;
+        }
+      }
+    }
+
+    &.color-negative .star-container {
+      .star {
+        svg {
+          fill: #ff0 !important;
+        }
+        i {
+          color: #ff0 !important;
+        }
+      }
+    }
+  
+    .star-container {
+      margin: 48px 0;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ "MY_FAVORITES" | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="onReload($event)">
+    <ion-refresher-content pullingText="{{ 'PULL_TO_REFRESH' | translate }}" refreshingText="{{ 'REFRESHING' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <empty-view *ngIf="isErrorViewVisible" icon="alert" [text]="'ERROR_NETWORK' | translate">
+  </empty-view>
+
+  <empty-view *ngIf="isEmptyViewVisible" icon="heart" [text]="'EMPTY_FAVORITES' | translate">
+  </empty-view>
+
+  <div *ngIf="places.length">
+    <ion-card class="shadow" no-margin margin-bottom color="light" *ngFor="let place of places" (click)="goToPlace(place)">
+      <div class="card-img">
+        <img-loader [src]="place.image?.url()" (load)="onImageLoad($event)"></img-loader>
+      </div>
+      <ion-card-content>
+        <ion-row no-padding>
+          <ion-col col-8>
+            <p class="bold">{{ place.title }}</p>
+            <star-rating *ngIf="place.rating" [starType]="'svg'" [size]="'medium'" [readOnly]="true" [showHalfStars]="false" [rating]="place.rating">
+            </star-rating>
+            <span class="bold text-small" ion-text color="accent">{{ place.category?.title }}</span>
+          </ion-col>
+          <ion-col col-4 text-end align-self-end>
+            <span class="bold text-small" ion-text color="primary">
+              {{ place.distance(params.location, params.unit) }}
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="onLoadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

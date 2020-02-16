@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ "MAP" | translate }}</ion-title>
+  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar color="light" mode="ios"
+      placeholder="{{ 'ENTER_ADDRESS' | translate }}"
+      (keyup.enter)="onSearchAddress($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div #map class="map" id="map"></div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="secondary" text-center>
+    <button ion-button outline round color="light" (click)="onSearchButtonTapped()">
+      {{ "SEARCH_THIS_AREA" | translate }}
+    </button>
+  </ion-toolbar>
+</ion-footer>

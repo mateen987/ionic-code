@@ -1,0 +1,40 @@
+page-places {
+
+  .scroll-content {
+    padding: 8px;
+  }
+
+  .card {
+    width: 100%;
+    .card-img {
+      height: 150px;
+      img-loader {
+        background-size: cover !important;
+      }
+    }
+    .card-content {
+      padding: 6px !important;
+    }
+  }
+
+  ion-note {
+    font-size: 12px;
+    align-self: flex-start;
+    margin-top: 14px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    &.rating li {
+      padding: 5px 0 !important;
+      background: none;
+      color: color($colors, primary, base);
+
+      ion-icon {
+        font-size: 16px;
+      }
+    }
+  }
+}

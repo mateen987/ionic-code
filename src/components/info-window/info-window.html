@@ -1,0 +1,31 @@
+<ion-item no-lines class="transparent">
+  <ion-thumbnail item-start>
+      <img-loader useImg
+      [spinner]="false"
+      [src]="place.imageThumb?.url()"
+      fallback="./assets/img/placeholder1.png"
+      (load)="onImageLoad($event)">
+    </img-loader>
+  </ion-thumbnail>
+  <h2 class="text-medium bold no-margin ellipsis" ion-text color="darker">{{ place.title }}</h2>
+  <p class="text-small bold no-margin" ion-text color="dark">{{ place.category.title }}</p>
+  <star-rating *ngIf="place.rating"
+    [starType]="'svg'"
+    [size]="'small'"
+    [readOnly]="true"
+    [showHalfStars]="false"
+    [rating]="place.rating">
+  </star-rating>
+  <div item-end *ngIf="location">
+    <span class="text-small bold" ion-text color="primary">
+      {{ place.distance(location) }}
+    </span>
+  </div>
+</ion-item>
+<ion-row>
+  <ion-col col-12>
+    <button ion-button block small round color="primary" (click)="goToPlace()">
+      {{ 'DISCOVER_THIS_PLACE' | translate }}
+    </button>
+  </ion-col>
+</ion-row>

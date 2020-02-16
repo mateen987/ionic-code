@@ -1,0 +1,30 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar class="menu-toolbar" color="light">
+      <ion-item class="transparent" no-lines *ngIf="user">
+        <ion-avatar item-start>
+          <img-loader useImg (load)="onImageLoad($event)"
+            fallback="assets/img/avatar.png"
+            [src]="user.photo?.url()">
+          </img-loader>
+        </ion-avatar>
+        <span class="text-medium bold" ion-text color="light">{{ user.name }}</span>
+      </ion-item>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button class="bold" color="light" menuClose text-uppercase no-lines ion-item detail-none
+        *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon [name]="p.icon" item-start color="primary"></ion-icon>
+        <p ion-text color="primary">
+          {{ p.title }}
+        </p>
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content></ion-nav>

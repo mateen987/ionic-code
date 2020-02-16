@@ -1,0 +1,70 @@
+<ion-header no-border>
+  <ion-toolbar class="transparent" color="primary">
+    <ion-buttons left>
+      <button ion-button (click)="onCancel()">
+        <!--<button ion-button (click)="navigateTo('SignInPage')">-->
+        <span showWhen="ios,core">{{ "CLOSE" | translate }}</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content padding text-center>
+  
+  <img margin class="logo" src="./assets/img/logo.png" width="220">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+ 
+    <ion-item class="transparent">
+      <ion-icon [name]="isFieldValid(form.controls.name) ? 'checkmark-circle' : 'close-circle'"
+        color="light" item-start>
+      </ion-icon>
+      <ion-label stacked color="light">{{ "NAME" | translate }}</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+      <ion-icon [name]="isFieldValid(form.controls.username) ? 'checkmark-circle' : 'close-circle'"
+        color="light" item-start>
+      </ion-icon>
+      <ion-label stacked color="light">{{ "USERNAME" | translate }}</ion-label>
+      <ion-input type="text" formControlName="username"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+      <ion-icon [name]="isFieldValid(form.controls.email) ? 'checkmark-circle' : 'close-circle'"
+        color="light" item-start>
+      </ion-icon>
+      <ion-label stacked color="light">{{ "EMAIL" | translate }}</ion-label>
+      <ion-input type="email" formControlName="email"
+        [placeholder]="'EMAIL_VALIDATION_HELP' | translate">
+      </ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+      <ion-icon [name]="isFieldValid(form.controls.password) ? 'checkmark-circle' : 'close-circle'"
+        color="light" item-start>
+      </ion-icon>
+      <ion-label stacked color="light">{{ "PASSWORD" | translate }}</ion-label>
+      <ion-input type="password" formControlName="password"
+        [placeholder]="'PASSWORD_VALIDATION_HELP' | translate">
+      </ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+      <ion-icon [name]="isFieldValid(form.controls.confirmPassword) ? 'checkmark-circle' : 'close-circle'"
+        color="light" item-start>
+      </ion-icon>
+      <ion-label stacked color="light">{{ "CONFIRM_PASSWORD" | translate }}</ion-label>
+      <ion-input type="password" formControlName="confirmPassword"></ion-input>
+    </ion-item>
+  
+    <div padding>
+      <button type="submit" color="light" ion-button block round>
+        {{ "SIGNUP" | translate }}
+      </button>
+    </div>
+
+  </form>
+</ion-content>

@@ -1,0 +1,226 @@
+<ion-header no-border>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <div text-center>
+        <img height="60" src="./assets/img/logo.png" />
+      </div>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button clear icon-only (click)="navTo('PostListPage')">
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+      <button ion-button clear icon-only (click)="navTo('SearchPage')">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content #container>
+
+  <empty-view *ngIf="isErrorViewVisible" icon="alert" [text]="'ERROR_NETWORK' | translate">
+  </empty-view>
+
+  <section *ngIf="isContentViewVisible">
+
+    <!-- Top Slide List -->
+
+    <ion-slides *ngIf="slides.length" pager autoplay="4000">
+      <ion-slide *ngFor="let slide of slides" (click)="onSlideTouched(slide)">
+        <div>
+          <img-loader useImg (load)="onImageLoad($event)" fallback="assets/img/placeholder-slide.png" [src]="slide.image?.url()">
+          </img-loader>
+        </div>
+      </ion-slide>
+    </ion-slides>
+
+    <!-- Category List -->
+
+    <ion-row padding>
+      <ion-col col-6>
+        <h5 text-start no-margin>
+          {{ 'CATEGORIES' | translate }}
+        </h5>
+      </ion-col>
+      <ion-col col-6>
+        <h5 ion-text color="primary" no-margin text-end (click)="navTo('CategoriesPage')">
+          {{ 'VIEW_ALL' | translate }}
+        </h5>
+      </ion-col>
+    </ion-row>
+
+    <ion-scroll scrollX="true" direction="x" style="height: 140px">
+      <ion-row nowrap align-items-center margin-horizontal>
+        <ion-col col-auto float-left *ngFor="let category of categories">
+          <ion-card class="card-category" color="light" (click)="navTo('PlacesPage', { category: category })">
+            <div class="card-image">
+              <img-loader (load)="onImageLoad($event)" [src]="category.imageThumb?.url()">
+              </img-loader>
+            </div>
+            <ion-card-content text-center text-nowrap>
+              <p class="text-small bold ellipsis">{{ category.title }}</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-scroll>
+
+    <!-- Featured Places -->
+
+    <ion-row padding>
+      <ion-col col-6>
+        <h5 text-start no-margin>
+          {{ 'FEATURED' | translate }}
+        </h5>
+      </ion-col>
+      <ion-col col-6>
+        <h5 ion-text color="primary" no-margin text-end (click)="navTo('PlacesPage', { isFeatured: true })">
+          {{ 'VIEW_ALL' | translate }}
+        </h5>
+      </ion-col>
+    </ion-row>
+
+    <section class="place-row" >
+
+      <ion-scroll scrollX="true" direction="x" style="height: 250px">
+        <ion-row nowrap margin-horizontal>
+          <ion-col col-auto float-left *ngFor="let place of featuredPlaces| slice:0:5; let ind=index;  " (click)="navTo('PlaceDetailPage', { place: place })">
+
+            <ion-card color="light">
+
+              <div class="image-container">
+                <img-loader useImg (load)="onImageLoad($event)" [src]="place.imageThumb?.url()">
+                </img-loader>
+              </div>
+
+              <ion-card-content text-nowrap>
+                <p no-margin class="text-medium ellipsis bold">{{ place.title }}</p>
+                <p class="text-medium ellipsis bold" ion-text color="accent">
+                  {{ place.category.title }}
+                </p>
+              </ion-card-content>
+            </ion-card>
+
+          </ion-col>
+        </ion-row>
+      </ion-scroll>
+
+    </section>
+
+    <!-- New Places -->
+<!-- 
+    <ion-row padding>
+      <ion-col col-6>
+        <h5 text-start no-margin>{{ 'NEW' | translate }}</h5>
+      </ion-col>
+      <ion-col col-6>
+        <h5 ion-text color="primary" no-margin text-end (click)="navTo('PlacesPage')">
+          {{ 'VIEW_ALL' | translate }}
+        </h5>
+      </ion-col>
+    </ion-row>
+
+    <section class="place-row" *ngIf="newPlaces?.length">
+
+      <ion-scroll scrollX="true" direction="x" style="height: 250px">
+        <ion-row nowrap margin-horizontal>
+          <ion-col col-auto float-left *ngFor="let place of newPlaces" (click)="navTo('PlaceDetailPage', { place: place })">
+
+            <ion-card color="light">
+
+              <div class="image-container">
+                <img [src]="place.imageThumb?.url()" src-fallback="./assets/img/placeholder1.png" />
+              </div>
+
+              <ion-card-content text-nowrap>
+                <p no-margin class="text-medium ellipsis bold">{{ place.title }}</p>
+                <p class="text-medium ellipsis bold" ion-text color="accent">
+                  {{ place.category.title }}
+                </p>
+              </ion-card-content>
+            </ion-card>
+
+          </ion-col>
+        </ion-row>
+      </ion-scroll>
+
+    </section>
+ -->
+    <!-- Nearby Places -->
+
+    <ion-row padding *ngIf="nearbyPlaces?.length">
+      <ion-col col-6>
+        <h5 text-start no-margin>{{ 'NEARBY' | translate }}</h5>
+      </ion-col>
+      <ion-col col-6>
+        <h5 ion-text color="primary" no-margin text-end (click)="navTo('PlacesPage', { location: location })">
+          {{ 'VIEW_ALL' | translate }}
+        </h5>
+      </ion-col>
+    </ion-row>
+
+    <section class="place-row" *ngIf="nearbyPlaces?.length">
+
+      <ion-scroll scrollX="true" direction="x" style="height: 250px">
+        <ion-row nowrap margin-horizontal>
+          <ion-col col-auto float-left *ngFor="let place of nearbyPlaces" (click)="navTo('PlaceDetailPage', { place: place })">
+
+            <ion-card color="light">
+
+              <div class="image-container">
+                <img [src]="place.imageThumb?.url()" src-fallback="./assets/img/placeholder1.png" />
+              </div>
+
+              <ion-card-content text-nowrap>
+                <p no-margin class="text-medium ellipsis bold">{{ place.title }}</p>
+                <p class="text-medium ellipsis bold" ion-text color="accent">
+                  {{ place.category.title }}
+                </p>
+              </ion-card-content>
+            </ion-card>
+
+          </ion-col>
+        </ion-row>
+      </ion-scroll>
+
+    </section>
+
+    <ion-row padding>
+      <ion-col col-6>
+        <h5 text-start no-margin>{{ 'MORE_PLACES' | translate }}</h5>
+      </ion-col>
+      <ion-col col-6>
+        <!-- <h5 ion-text color="primary" no-margin text-end (click)="navTo('PlacesPage')">
+          {{ 'VIEW_ALL' | translate }}
+        </h5> -->
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="place-row">
+      <ion-col col-6 float-left *ngFor="let place of randomPlaces" (click)="navTo('PlaceDetailPage', { place: place })">
+
+        <ion-card class="full-width" no-margin color="light">
+
+          <div class="image-container">
+            <img defaultImage="./assets/img/placeholder1.png" [lazyLoad]="place.imageThumb?.url()" [scrollObservable]="container.ionScroll"/>
+          </div>
+
+          <ion-card-content text-nowrap>
+            <p no-margin class="text-medium ellipsis bold">{{ place.title }}</p>
+            <p class="text-medium ellipsis bold" ion-text color="accent">
+              {{ place.category.title }}
+            </p>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </section>
+
+  <ion-infinite-scroll (ionInfinite)="onLoadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

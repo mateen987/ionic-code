@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'SETTINGS' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list no-lines radio-group (ionChange)="onChangeUnit()" [(ngModel)]="settings.unit">
+    <ion-list-header>
+      <p ion-text class="bold" color="primary">{{ 'DISTANCE_UNIT' | translate }}</p>
+    </ion-list-header>
+    <ion-item color="light" no-lines>
+      <ion-label class="text-medium bold">Mi</ion-label>
+      <ion-radio value="mi"></ion-radio>
+    </ion-item>
+    <ion-item color="light" no-lines>
+      <ion-label class="text-medium bold">Km</ion-label>
+      <ion-radio value="km"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-list no-lines radio-group (ionChange)="onChangeLang()" [(ngModel)]="settings.lang">
+    <ion-list-header>
+      <p ion-text class="bold" color="primary">{{ 'LANGUAGE' | translate }}</p>
+    </ion-list-header>
+    <ion-item color="light" no-lines>
+      <ion-label class="text-medium bold">{{ 'ENGLISH' | translate }}</ion-label>
+      <ion-radio value="en"></ion-radio>
+    </ion-item>
+    <ion-item color="light" no-lines>
+      <ion-label class="text-medium bold">{{ 'SPANISH' | translate }}</ion-label>
+      <ion-radio value="es"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <div text-center>
+    <button ion-button round color="primary" (click)="goToWalkthrough()">
+      {{ 'OPEN_WALKTHROUGH' | translate }}
+    </button>
+  </div>
+    
+</ion-content>
